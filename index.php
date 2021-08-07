@@ -265,7 +265,7 @@
                                     <div class="form-group">
                                         <label for="first-name-column">Tenant Shop</label>
                                         <select id="to" class="form-select">
-                                           
+                                          
                                         </select>
 
                                     </div>
@@ -323,61 +323,61 @@
         //     }
         //     serverCall.send(JSON.stringify(data));
         // }
-// function display(){
-//     var id = document.getElementById('from').value;
-//     let dropdown = document.getElementById('to');
-//     dropdown.length =0;
+function display(){
+    var id = document.getElementById('from').value;
+    let dropdown = document.getElementById('to');
+    dropdown.length =0;
     
-//     let defaultOption = document.createElement('option');
-//     defaultOption.text ='Select Shop';
+    let defaultOption = document.createElement('option');
+    defaultOption.text ='Select Shop';
 
-//     dropdown.add(defaultOption);
-//     dropdown.selectedIndex =0;
+    dropdown.add(defaultOption);
+    dropdown.selectedIndex =0;
 
-//     var serverCall = new XMLHttpRequest();
-//             serverCall.open('POST', 'api/search.php', true);
-//             serverCall.onreadystatechange = function(){
-//                 if (this.readyState == 4 && this.status == 200) {
-//                     if (this.response) {
-//                         var myObj = JSON.parse(this.responseText);
-//                         console.log(myObj.data);
+    var serverCall = new XMLHttpRequest();
+            serverCall.open('POST', 'api/search.php', true);
+            serverCall.onreadystatechange = function(){
+                if (this.readyState == 4 && this.status == 200) {
+                    if (this.response) {
+                        var myObj = JSON.parse(this.responseText);
+                        console.log(myObj.data);
                       
-//                        for(let i =0; i< myObj.data.length;i++){
-//                           let option = document.createElement('option');
-//                            option.value = myObj.data[i]['id'];
-//                            option.text = myObj.data[i]['shop'];
-//                        }
+                       for(let i =0; i< myObj.data.length;i++){
+                          let option = document.createElement('option');
+                           option.value = myObj.data[i]['id'];
+                           option.text = myObj.data[i]['shop'];
+                       }
                      
-//                     }
-//                 }
-//             }
-//             var data = {
-//                 'd': id
-//             }
-//             serverCall.send(JSON.stringify(data));
-        // }
+                    }
+                }
+            }
+            var data = {
+                'd': id
+            }
+            serverCall.send(JSON.stringify(data));
+        }
 
-//         $(document).ready(function (){
-//             var listItems ='<option selected="selected" value="0">-Select-</option>';
-//             var serverCall = new XMLHttpRequest();
-//             serverCall.open('POST', 'api/search.php', true);
-//             serverCall.onreadystatechange = function(){
-//                 if (this.readyState == 4 && this.status == 200) {
-//                     if (this.response) {
-//                         var myObj = JSON.parse(this.responseText);
-//                         console.log(myObj.data);
+        $(document).ready(function (){
+            var listItems ='<option selected="selected" value="0">-Select-</option>';
+            var serverCall = new XMLHttpRequest();
+            serverCall.open('POST', 'api/search.php', true);
+            serverCall.onreadystatechange = function(){
+                if (this.readyState == 4 && this.status == 200) {
+                    if (this.response) {
+                        var myObj = JSON.parse(this.responseText);
+                        console.log(myObj.data);
 
-//                         for(var i=0; i< myObj.data.length; i++){
-//                             listItems+="<option value='" +myObj.data[i]['id'] + "'>" + myObj.data[i]['shop'] +"</option>";
+                        for(var i=0; i< myObj.data.length; i++){
+                            listItems+="<option value='" +myObj.data[i]['id'] + "'>" + myObj.data[i]['shop'] +"</option>";
 
-//                         }
+                        }
            
-//         }
-//     }
-// }
-//     $('#to').html(listItems);
+        }
+    }
+}
+    $('#to').html(listItems);
 
-// });
+});
 
 
     </script>
