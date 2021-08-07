@@ -357,27 +357,27 @@ function display(){
             serverCall.send(JSON.stringify(data));
         }
 
-        $(document).ready(function (){
-            var listItems ='<option selected="selected" value="0">-Select-</option>';
-            var serverCall = new XMLHttpRequest();
-            serverCall.open('POST', 'api/search.php', true);
-            serverCall.onreadystatechange = function(){
-                if (this.readyState == 4 && this.status == 200) {
-                    if (this.response) {
-                        var myObj = JSON.parse(this.responseText);
-                        console.log(myObj.data);
+//         $(document).ready(function (){
+//             var listItems ='<option selected="selected" value="0">-Select-</option>';
+//             var serverCall = new XMLHttpRequest();
+//             serverCall.open('POST', 'api/search.php', true);
+//             serverCall.onreadystatechange = function(){
+//                 if (this.readyState == 4 && this.status == 200) {
+//                     if (this.response) {
+//                         var myObj = JSON.parse(this.responseText);
+//                         console.log(myObj.data);
 
-                        for(var i=0; i< myObj.data.length; i++){
-                            listItems+="<option value='" +myObj.data[i]['id'] + "'>" + myObj.data[i]['shop'] +"</option>";
+//                         for(var i=0; i< myObj.data.length; i++){
+//                             listItems+="<option value='" +myObj.data[i]['id'] + "'>" + myObj.data[i]['shop'] +"</option>";
 
-                        }
+//                         }
            
-        }
-    }
-}
-    $('#to').html(listItems);
+//         }
+//     }
+// }
+//     $('#to').html(listItems);
 
-});
+// });
 
 
     </script>
