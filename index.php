@@ -147,7 +147,9 @@
         .form select {
             width: 90%;
 
-
+        }
+        .form input{
+            width: 90;
         }
 
         .form label {
@@ -264,9 +266,11 @@
                                 <div class="column">
                                     <div class="form-group">
                                         <label for="first-name-column">Tenant Shop</label>
-                                        <select id="to" class="form-select">
+                                        <input type="text" id="shop" class="form-control"
+                                                            placeholder="<?php echo 'Shop Name';?>" name="tenant">
+                                        <!-- <select id="to" class="form-select">
                                           
-                                        </select>
+                                        </select> -->
 
                                     </div>
 
