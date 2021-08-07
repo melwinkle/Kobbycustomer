@@ -149,7 +149,7 @@
 
         }
         .form input{
-            width: 90;
+            width: 90%;
         }
 
         .form label {
