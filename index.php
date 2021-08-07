@@ -232,7 +232,7 @@
                                         <div class="form-group">
 
                                             <label for="first-name-column">Landlord Shop</label>
-                                            <select id="from" class="form-select" >
+                                            <select id="from" class="form-select" onclick="display()" >
 
                                                 <option selected value="">Select a Landlord</option>
                                                 <?php
