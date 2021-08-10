@@ -178,17 +178,6 @@ $tasks = new task($db);
 $prop = new property($db);
 $tenant = new tenants($db);
 
-
-
-$tt = $tenant->getTenantsShop();
-$totaltenants = $tt->rowCount();
-
-$dd = $user->duedate();
-$duedaters = $dd->rowCount();
-
-
-$tasking = $tasks->getAlltasks();
-$totaltasks = $tasking->rowCount();
 ?>
 </head>
 <body>
@@ -218,15 +207,21 @@ $totaltasks = $tasking->rowCount();
                                 <div class="card-content">
                                     <div class="card-body">
                                         <form class="form" id="s1" method="POST">
-                                        <!-- <div id='getId' hidden><?php echo $_SESSION['shop']?></div> -->
+ 
+                                        <div id='getId' hidden><?php echo $_GET['id']?></div>
                                             
                                             <div class="row">
                                                 <div class="col-md-6 col-12">
+                                                    <?php 
+                                                    $r = $tenant->getco();
+                                                    if($r->rowCount()>0){
+                                                    $ro =$r->fetch(PDO::FETCH_ASSOC);
+                                                       
+                                                    ?>
                                                     <div class="form-group">
                                                  
                                                         <label for="first-name-column">Tenant Shop</label>
-                                                        <input type="text" id="tenant" class="form-control"
-                                                            placeholder="<?php echo 'Tenant Name';?>" name="lname-column">
+                                                        <input type="text" id="tenant" class="form-control" value="<?php echo $ro['Name_of_the_shop'];?>" name="lname-column" disabled/>
                                                         
                                                     </div>
 
@@ -238,7 +233,7 @@ $totaltasks = $tasking->rowCount();
                                                  
                                                         <label for="first-name-column">Landlord Shop</label>
                                                         <input type="text" id="shop" class="form-control"
-                                                            placeholder="<?php echo 'Shop Name';?>" name="lname-column">
+                                                            name="lname-column" value ="<?php echo $ro['property_name']?>" disabled />
                                                         
                                                     </div>
 
@@ -263,10 +258,13 @@ $totaltasks = $tasking->rowCount();
                                                 
                                             
                                             <div class="column" style ="margin-left:40%; margin-top:5%">
-                                                    <button type="button" onclick="return add()" class="btn btn-primary me-1 mb-1" form="s1">Send</button>
+                                                    <button type="button" onclick="return add(event)" id="<?php echo $ro['property_id']?>" class="btn btn-primary me-1 mb-1" form="s1">Send</button>
                                                     <!-- in the backend get the date before inserting it into the database -->
                                                   
                                                 </div>
+                                                <?php }
+                                                    
+                                                    ?>
                                         </form>
                                     </div>
                                 </div>
@@ -316,9 +314,58 @@ $totaltasks = $tasking->rowCount();
 
     <script>
     
-    function add(){
-        window.location="complaint_m.php";
+    function add(e){
+       var id = e.target.id;
+       const ten = document.getElementById('getId').innerHTML;
+       const feed = document.getElementById('complaint').value;
+       var status=true;
+
+       if(feed ==""){
+    document.getElementById('complaint').style.border ="2px solid red";
+     status=false;
+     printError("Terror","please enter a complaint");
+   }
+   else{
+     document.getElementById('complaint').style.border ="2px solid green";
+   }
+
+   if(status==true){
+    var serverCall = new XMLHttpRequest();
+       serverCall.open('POST','api/addfeedback.php',true);
+       serverCall.onreadystatechange =function(){
+           if(this.readyState==4 && this.status==200){
+            console.log(this.responseText)
+           if(this.responseText ==0){
+            Swal.fire({
+            title:'unable to add complaint',
+            text:'The complaint could not be added',
+            icon:'error',
+            confirmButtonText:'OK'
+          })  
+               }
+               else{
+                Swal.fire({
+            title:'Complaint Added',
+            text:'The complaint has been added. Thank you',
+            icon:'success',
+            confirmButtonText:'OK'
+          }).then((result) => {
+            if(result.isConfirmed){
+              window.location='complaint_h.php'
+            }
+          }); 
+            
+               }
+           }
+       };
+       var data ={
+           'tena':ten,
+           'shop':id,
+           'message':feed
+       };
+       serverCall.send(JSON.stringify(data));
     }
+}
     </script>
 </body>
 </html>

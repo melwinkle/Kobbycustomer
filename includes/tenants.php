@@ -124,14 +124,16 @@ class tenants{
 
     public function rent(){
         $active=$_SESSION['shop'];
-        $query ="SELECT * FROM contracts inner join tenant on tenant.tenant_id=contracts.tenant_id inner join property on property.property_id=contracts.property_id WHERE contracts.property_id='$active' and DATE(contracts.end_date)=CURRENT_DATE;";
+        $query =" SELECT *,CURRENT_DATE-end_date as diff FROM contracts inner join tenant on tenant.tenant_id=contracts.tenant_id inner join property on property.property_id=contracts.property_id WHERE contracts.property_id='$active' and CURRENT_DATE-end_date>=0 and CURRENT_DATE-end_date<=30";
         $stmt=$this->conn->prepare($query);
         $stmt->execute();
         return $stmt;
     }
 
+
+
     public function sway(){
-        $query="SELECT * from contracts,tenant where DATE(contracts.end_date)=CURRENT_DATE and tenant.tenant_id = contracts.tenant_id";
+        $query="SELECT Name_of_the_shop,CURRENT_DATE-end_date as diff FROM contracts inner join tenant on tenant.tenant_id=contracts.contract_id WHERE CURRENT_DATE-end_date>=0 and CURRENT_DATE-end_date<=30";
         $stmt=$this->conn->prepare($query);
         $stmt->execute();
         return $stmt;
@@ -146,7 +148,7 @@ class tenants{
     public function getTenants(){
         $s =$_SESSION['shop'];
         $active="1";
-        $query ="SELECT * FROM tenant left join contracts on contracts.tenant_id=tenant.tenant_id where contracts.tenant_id is null and tenant.property_id ='$s' and tenant.status ='$active'";
+        $query ="SELECT tenant.tenant_id, tenant.Name_of_the_shop FROM tenant left join contracts on contracts.tenant_id=tenant.tenant_id where contracts.tenant_id is null and tenant.property_id ='$s' and tenant.status ='$active'";
         $stmt= $this->conn->prepare($query);
         $stmt->execute();
         return $stmt;
@@ -160,6 +162,26 @@ class tenants{
         $stmt->execute();
         return $stmt;
 
+    }
+
+    public function vtenant($keywords){
+            $query = "SELECT * from tenant where property_id=? and Name_of_the_shop LIKE ?";
+            $stmt = $this->conn->prepare($query);
+            
+            $keywords=htmlspecialchars(strip_tags($keywords));
+            $keywords ="%{$keywords}%";
+            $stmt->bindParam(1,$this->prop_id);
+            $stmt->bindParam(2,$keywords);
+           
+            $stmt->execute();
+            return $stmt;
+    }
+    public function getco(){
+        $i =$_GET["id"];
+        $query = "SELECT * from tenant, property where tenant.tenant_id ='$i'";
+        $stmt = $this->conn->prepare($query);
+        $stmt->execute();
+        return $stmt;
     }
 
 }

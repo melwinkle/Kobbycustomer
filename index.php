@@ -150,6 +150,12 @@
 
         }
 
+        .form input {
+            width: 90%;
+
+
+        }
+
         .form label {
             margin-top: 8%;
         }
@@ -182,19 +188,19 @@
     $user = new users($db);
     $tasks = new task($db);
     $prop = new property($db);
-    $tenant = new tenants($db);
+    // $tenant = new tenants($db);
 
 
 
-    $tt = $tenant->getTenantsShop();
-    $totaltenants = $tt->rowCount();
+    // $tt = $tenant->getTenantsShop();
+    // $totaltenants = $tt->rowCount();
 
-    $dd = $user->duedate();
-    $duedaters = $dd->rowCount();
+    // $dd = $user->duedate();
+    // $duedaters = $dd->rowCount();
 
 
-    $tasking = $tasks->getAlltasks();
-    $totaltasks = $tasking->rowCount();
+    // $tasking = $tasks->getAlltasks();
+    // $totaltasks = $tasking->rowCount();
     ?>
 </head>
 
@@ -232,7 +238,7 @@
                                         <div class="form-group">
 
                                             <label for="first-name-column">Landlord Shop</label>
-                                            <select id="from" class="form-select" >
+                                            <select id="from" class="form-select">
 
                                                 <option selected value="">Select a Landlord</option>
                                                 <?php
@@ -264,11 +270,10 @@
                                 <div class="column">
                                     <div class="form-group">
                                         <label for="first-name-column">Tenant Shop</label>
-                                        <select id="to" class="form-select">
-                                           
-                                        </select>
+                                        <input type="text" id="shop" class="form-control"  name="tenant">
 
                                     </div>
+                                    <div class="error" id="Terror"></div>
 
 
 
@@ -276,7 +281,7 @@
 
 
                                     <div class="column" style="margin-left:25%; margin-top:5%">
-                                        <button type="button" onclick="return add()" class="btn btn-primary me-1 mb-1" form="s1">Verify</button>
+                                        <button type="button" onclick="return verify()" class="btn btn-primary me-1 mb-1" form="s1">Verify</button>
 
                                     </div>
                                     <!-- verify and pick the client name and building location to the comlaint_m.php page -->
@@ -294,91 +299,73 @@
     </div>
 
 
-    <script>
+    <!-- <script>
         function add() {
             window.location = "complaint_m.php";
         }
-    </script>
+    </script> -->
 
     <script>
-        // function displaydetails() {
-        //     var id = document.getElementById('from').value;
-        //     var serverCall = new XMLHttpRequest();
-        //     serverCall.open('POST', 'api/search.php', true);
-        //     serverCall.onreadystatechange = function(){
-        //         if (this.readyState == 4 && this.status == 200) {
-        //             if (this.response) {
-        //                 var myObj = JSON.parse(this.responseText);
-        //                 var ele = document.getElementById('to');
-        //                 for (var i = 0; i < myObj.data.length; i++) {
-        //                     ele.innerHTML = ele.innerHTML +
-        //                         '<option value="' + myObj.data[i]['id'] + '">' +
-        //                         myObj.data[i]['shop'] + '</option>';
-        //                 }
-        //             }
-        //         }
-        //     }
-        //     var data = {
-        //         'd': id
-        //     }
-        //     serverCall.send(JSON.stringify(data));
-        // }
-// function display(){
-//     var id = document.getElementById('from').value;
-//     let dropdown = document.getElementById('to');
-//     dropdown.length =0;
-    
-//     let defaultOption = document.createElement('option');
-//     defaultOption.text ='Select Shop';
+        
+function verify(){
+    const tenant = document.getElementById('shop').value;
+    const land = document.getElementById('from').value;
+    var status = true;
 
-//     dropdown.add(defaultOption);
-//     dropdown.selectedIndex =0;
+    if (tenant ==""){
+     document.getElementById('shop').style.border ="2px solid red";
+     status=false;
+     printError("Terror","please enter a valid username");
+   }
+   else{
+     document.getElementById('shop').style.border ="2px solid green";
+   }
 
-//     var serverCall = new XMLHttpRequest();
-//             serverCall.open('POST', 'api/search.php', true);
-//             serverCall.onreadystatechange = function(){
-//                 if (this.readyState == 4 && this.status == 200) {
-//                     if (this.response) {
-//                         var myObj = JSON.parse(this.responseText);
-//                         console.log(myObj.data);
-                      
-//                        for(let i =0; i< myObj.data.length;i++){
-//                           let option = document.createElement('option');
-//                            option.value = myObj.data[i]['id'];
-//                            option.text = myObj.data[i]['shop'];
-//                        }
-                     
-//                     }
-//                 }
-//             }
-//             var data = {
-//                 'd': id
-//             }
-//             serverCall.send(JSON.stringify(data));
-        // }
+   if (land ==""){
+     document.getElementById('from').style.border ="2px solid red";
+     status=false;
+     printError("rerror","please enter a valid username");
+   }
+   else{
+     document.getElementById('from').style.border ="2px solid green";
+   }
+   if(status == true){
+       var serverCall = new XMLHttpRequest();
+       serverCall.open('POST','api/verifytenant.php',true);
+       serverCall.onreadystatechange =function(){
+           if(this.readyState==4 && this.status==200){
+            console.log(this.responseText)
+           if(this.responseText ==0){
+            Swal.fire({
+            title:'unable to verify account',
+            text:'The user account could not be verified',
+            icon:'error',
+            confirmButtonText:'OK'
+          })  
+               }
+               else{
+                Swal.fire({
+            title:'Verified',
+            text:'The account exists',
+            icon:'success',
+            confirmButtonText:'OK'
+          }).then((result) => {
+            if(result.isConfirmed){
+              window.location='complaint_m.php?id='+this.responseText;
+            }
+          }); 
+            
+               }
+           }
+       };
+       var data ={
+           'tena':tenant,
+           'shop':land
+       };
+       serverCall.send(JSON.stringify(data));
 
-//         $(document).ready(function (){
-//             var listItems ='<option selected="selected" value="0">-Select-</option>';
-//             var serverCall = new XMLHttpRequest();
-//             serverCall.open('POST', 'api/search.php', true);
-//             serverCall.onreadystatechange = function(){
-//                 if (this.readyState == 4 && this.status == 200) {
-//                     if (this.response) {
-//                         var myObj = JSON.parse(this.responseText);
-//                         console.log(myObj.data);
-
-//                         for(var i=0; i< myObj.data.length; i++){
-//                             listItems+="<option value='" +myObj.data[i]['id'] + "'>" + myObj.data[i]['shop'] +"</option>";
-
-//                         }
-           
-//         }
-//     }
-// }
-//     $('#to').html(listItems);
-
-// });
-
+   }
+}
 
     </script>
 </body>
