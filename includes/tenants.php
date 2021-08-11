@@ -178,7 +178,7 @@ class tenants{
     }
     public function getco(){
         $i =$_GET["id"];
-        $query = "SELECT * from tenant, property where tenant.tenant_id ='$i'";
+        $query = "SELECT * from tenant inner join property on tenant.tenant_id=property.tenant_id where tenant.tenant_id='$i'";
         $stmt = $this->conn->prepare($query);
         $stmt->execute();
         return $stmt;
