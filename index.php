@@ -240,11 +240,7 @@
                                         <div class="form-group">
 
                                             <label for="first-name-column">Landlord Shop</label>
-<<<<<<< HEAD
                                             <select id="from" class="form-select">
-=======
-                                            <select id="from" class="form-select" onclick="displaydetails()" >
->>>>>>> 7da94580a0a6701650cee83ffcb78fd42248d7a0
 
                                                 <option selected value="">Select a Landlord</option>
                                                 <?php
@@ -276,15 +272,7 @@
                                 <div class="column">
                                     <div class="form-group">
                                         <label for="first-name-column">Tenant Shop</label>
-<<<<<<< HEAD
                                         <input type="text" id="shop" class="form-control"  name="tenant">
-=======
-                                        <input type="text" id="shop" class="form-control"
-                                                            placeholder="<?php echo 'Shop Name';?>" name="tenant">
-                                        <!-- <select id="to" class="form-select">
-                                          
-                                        </select> -->
->>>>>>> 7da94580a0a6701650cee83ffcb78fd42248d7a0
 
                                     </div>
                                     <div class="error" id="Terror"></div>
