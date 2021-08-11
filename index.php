@@ -147,7 +147,9 @@
         .form select {
             width: 90%;
 
-
+        }
+        .form input{
+            width: 90%;
         }
 
         .form input {
@@ -238,7 +240,11 @@
                                         <div class="form-group">
 
                                             <label for="first-name-column">Landlord Shop</label>
+<<<<<<< HEAD
                                             <select id="from" class="form-select">
+=======
+                                            <select id="from" class="form-select" onclick="displaydetails()" >
+>>>>>>> 7da94580a0a6701650cee83ffcb78fd42248d7a0
 
                                                 <option selected value="">Select a Landlord</option>
                                                 <?php
@@ -270,7 +276,15 @@
                                 <div class="column">
                                     <div class="form-group">
                                         <label for="first-name-column">Tenant Shop</label>
+<<<<<<< HEAD
                                         <input type="text" id="shop" class="form-control"  name="tenant">
+=======
+                                        <input type="text" id="shop" class="form-control"
+                                                            placeholder="<?php echo 'Shop Name';?>" name="tenant">
+                                        <!-- <select id="to" class="form-select">
+                                          
+                                        </select> -->
+>>>>>>> 7da94580a0a6701650cee83ffcb78fd42248d7a0
 
                                     </div>
                                     <div class="error" id="Terror"></div>
@@ -306,6 +320,7 @@
     </script> -->
 
     <script>
+<<<<<<< HEAD
         
 function verify(){
     const tenant = document.getElementById('shop').value;
@@ -366,6 +381,86 @@ function verify(){
 
    }
 }
+=======
+        function displaydetails() {
+            var id = document.getElementById('from').value;
+            var serverCall = new XMLHttpRequest();
+            serverCall.open('POST', 'api/search.php', true);
+            serverCall.onreadystatechange = function(){
+                if (this.readyState == 4 && this.status == 200) {
+                    if (this.response) {
+                        var myObj = JSON.parse(this.responseText);
+                        var ele = document.getElementById('to');
+                        for (var i = 0; i < myObj.data.length; i++) {
+                            ele.innerHTML = ele.innerHTML +
+                                '<option value="' + myObj.data[i]['id'] + '">' +
+                                myObj.data[i]['shop'] + '</option>';
+                        }
+                    }
+                }
+            }
+            var data = {
+                'd': id
+            }
+            serverCall.send(JSON.stringify(data));
+        }
+// function display(){
+//     var id = document.getElementById('from').value;
+//     let dropdown = document.getElementById('to');
+//     dropdown.length =0;
+    
+//     let defaultOption = document.createElement('option');
+//     defaultOption.text ='Select Shop';
+
+//     dropdown.add(defaultOption);
+//     dropdown.selectedIndex =0;
+
+//     var serverCall = new XMLHttpRequest();
+//             serverCall.open('POST', 'api/search.php', true);
+//             serverCall.onreadystatechange = function(){
+//                 if (this.readyState == 4 && this.status == 200) {
+//                     if (this.response) {
+//                         var myObj = JSON.parse(this.responseText);
+//                         console.log(myObj.data);
+                      
+//                        for(let i =0; i< myObj.data.length;i++){
+//                           let option = document.createElement('option');
+//                            option.value = myObj.data[i]['id'];
+//                            option.text = myObj.data[i]['shop'];
+//                        }
+                     
+//                     }
+//                 }
+//             }
+//             var data = {
+//                 'd': id
+//             }
+//             serverCall.send(JSON.stringify(data));
+//         }
+
+//         $(document).ready(function (){
+//             var listItems ='<option selected="selected" value="0">-Select-</option>';
+//             var serverCall = new XMLHttpRequest();
+//             serverCall.open('POST', 'api/search.php', true);
+//             serverCall.onreadystatechange = function(){
+//                 if (this.readyState == 4 && this.status == 200) {
+//                     if (this.response) {
+//                         var myObj = JSON.parse(this.responseText);
+//                         console.log(myObj.data);
+
+//                         for(var i=0; i< myObj.data.length; i++){
+//                             listItems+="<option value='" +myObj.data[i]['id'] + "'>" + myObj.data[i]['shop'] +"</option>";
+
+//                         }
+           
+//         }
+//     }
+// }
+//     $('#to').html(listItems);
+
+// });
+
+>>>>>>> 7da94580a0a6701650cee83ffcb78fd42248d7a0
 
     </script>
 </body>
