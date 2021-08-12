@@ -215,6 +215,12 @@ $tenant = new tenants($db);
 
                                                 <div class="column">
                                                     <div class="form-group">
+                                                    <?php 
+                                                    $r = $tenant->getco();
+                                                    if($r->rowCount()>0){
+                                                    $ro =$r->fetch(PDO::FETCH_ASSOC);
+                                                       
+                                                    ?>
                                                  
                                                         <label for="first-name-column">Landlord Shop</label>
                                                         <input type="text" id="shop" class="form-control"
@@ -224,12 +230,7 @@ $tenant = new tenants($db);
 
                                                  
                                                     <div class ="error" id="rerror"></div>
-                                                    <?php 
-                                                    $r = $tenant->getco();
-                                                    if($r->rowCount()>0){
-                                                    $ro =$r->fetch(PDO::FETCH_ASSOC);
-                                                       
-                                                    ?>
+                                                   
                                                     <div class="form-group">
                                                  
                                                         <label for="first-name-column">Tenant Shop</label>
