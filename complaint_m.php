@@ -212,6 +212,18 @@ $tenant = new tenants($db);
                                             
                                             <div class="row">
                                                 <div class="col-md-6 col-12">
+
+                                                <div class="column">
+                                                    <div class="form-group">
+                                                 
+                                                        <label for="first-name-column">Landlord Shop</label>
+                                                        <input type="text" id="shop" class="form-control"
+                                                            name="lname-column" value ="<?php echo $ro['property_name']?>" disabled />
+                                                        
+                                                    </div>
+
+                                                 
+                                                    <div class ="error" id="rerror"></div>
                                                     <?php 
                                                     $r = $tenant->getco();
                                                     if($r->rowCount()>0){
@@ -228,17 +240,7 @@ $tenant = new tenants($db);
                                                  
                                                     <div class ="error" id="rerror"></div>
 
-                                                    <div class="column">
-                                                    <div class="form-group">
-                                                 
-                                                        <label for="first-name-column">Landlord Shop</label>
-                                                        <input type="text" id="shop" class="form-control"
-                                                            name="lname-column" value ="<?php echo $ro['property_name']?>" disabled />
-                                                        
-                                                    </div>
-
-                                                 
-                                                    <div class ="error" id="rerror"></div>
+                                                   
                                                    
                                                 </div>
                                                 <div class="column">
